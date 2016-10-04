@@ -1,0 +1,3 @@
+{telur:0.5 ,gula:30 ,mentega:30,cinammon:30, tepung:30}
+{telur:0.3 ,gula:10 ,mentega:2,cinammon:30, tepung:30}
+{telur:0.5 ,gula:15 ,mentega:30,cinammon:30, tepung:20}
