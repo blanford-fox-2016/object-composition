@@ -42,7 +42,6 @@ class CookiesFactory {
     return database;
   }
 }
-
 let ChocoCookies = {
   cookiesName : 'Cookies',
   ingridients : ['Telur', 'Tepung', 'Choco cips'],
