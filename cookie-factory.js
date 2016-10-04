@@ -88,7 +88,6 @@ class Cookies {
   get cinnamon(){
     return this._cinnamon
   }
-
 }
 
 class ChocoCookies extends Cookies{
