@@ -3,13 +3,14 @@
 
 
 
-// class Ingredient {
-//   constructor(options) {
-//     this.name = options['name']
-//     this.amount = options['amount']
-//     this.has_gluten = options['has_gluten']
-//   }
-// }
+class Ingredient {
+  constructor(nama, amount) {
+    // this.name = options['name']
+    // this.amount = options['amount']
+    this.nama = nama
+    this.amount = amount
+  }
+}
 
 
 
@@ -19,34 +20,47 @@ class Factory {
     this.flavour = flavour;
     this.user_time = user_time;
     this.bulk = bulk;
+    this.ingredients = []
   }
 
   produceCake() {
-    for (var i = 0; i < this.bulk; i += 1) {
+    for (var i = 0; i < this.bulk; i++) {
       var temp = new Bake(this.flavour, this.user_time);
-      this.container.push(temp.result())
+      this.container.push(temp.kue)
+      console.log(this.container);
     }
   }
 
   listCake() {
-    this.produceCake();
-    console.log(this.container);
+    // this.produceCake();
+    // return `${this.ingredients}`
+    // console.log(this.container);
+    // return this.container
+    // return (`The cake flavour is ${this.container._flavour} ,`);
+    // return this.container._flavour
   }
 }
 
 class Cake {
   constructor(flavour, ingredients) {
     this._flavour = flavour;
-    this.ingredients = ingredients;
+    this.ingredients = ingredients
+    // console.log(this.ingredients);
+    // console.log(this.nama_ingredient);
   }
+
+
 }
 
 class Bake {
   constructor(flavour, user_time) {
-    var kue = new Cake(flavour);
+    var kue = new Cake(flavour, new Ingredient("gula", 50));
     this._flavour = kue._flavour
     this._bake_time = 0;
     this._user_time = user_time || 0
+    this.kue = kue
+    // console.log(this.kue);
+
   }
 
   baking() {
@@ -77,7 +91,9 @@ class Bake {
 
   result() {
     this.baking()
-    return (`The cake flavour is ${this._flavour} ,the time needed to bake is ${this._bake_time} and your baking time is ${this._user_time}. Your cake is ${this.baking_result()} `);
+    // return (`The cake flavour is ${this._flavour} ,the time needed to bake is ${this._bake_time} and your baking time is ${this._user_time}. Your cake is ${this.baking_result()} `);
+
+    // return (`The cake flavour is ${this._flavour} ,`);
   }
 }
 
@@ -107,13 +123,10 @@ class PeanutCake extends Cake {
 
 
 
-var testing = new Bake("coklat", 22);
+// var testing = new Bake("coklat", 22);
 // console.log(testing.baking_result());
-testing.result();
-
-var hayo = new Factory("coklat", 12, 10);
-console.log(hayo.listCake());
-
-// class Factory() {
-//
-// }
+// testing.result();
+// var ing = new Ingredient("gula", 50)
+// console.log(ing);
+var createCake = new Factory("coklat", 12, 2);
+createCake.produceCake()
