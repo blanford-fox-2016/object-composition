@@ -1,132 +1,129 @@
-// Definining Class
-// var fs = require('fs');
+"use strict"
 
+var kue=[]
 
+class Cookie {
+  constructor(cakeStatus) {
+    this.cakeStatus = "mentah"
+  }
+}
+
+class PeanutButter extends Cookie {
+  constructor(cakeStatus, cakeName) {
+    super(cakeStatus)
+    this.cakeName = "kue kacang"
+  }
+}
+
+class ChocolateChip extends Cookie {
+  constructor(cakeStatus, cakeName) {
+    super(cakeStatus)
+    this.cakeName = "kue coklat"
+  }
+}
+
+class CheeseCake extends Cookie {
+  constructor(cakeStatus, cakeName) {
+    super(cakeStatus)
+    this.cakeName = "kue keju"
+  }
+}
 
 class Ingredient {
-  constructor(nama, amount) {
-    // this.name = options['name']
-    // this.amount = options['amount']
-    this.nama = nama
-    this.amount = amount
+  constructor(sugar) {
+    this.sugar = sugar
   }
 }
 
-
-
-class Factory {
-  constructor(flavour, user_time, bulk) {
-    this.container = [];
-    this.flavour = flavour;
-    this.user_time = user_time;
-    this.bulk = bulk;
-    this.ingredients = []
+class CookieFactory {
+  constructor(flavor, cookTime) {
+    this.flavor = flavor
+    this.cookTime = cookTime
+    this.cakeContainter = []
+    this.bakeTime = 0
+    this.sugar = 0
+    this.cakeName = ""
+    this.cakeStatus
   }
 
-  produceCake() {
-    for (var i = 0; i < this.bulk; i++) {
-      var temp = new Bake(this.flavour, this.user_time);
-      this.container.push(temp.kue)
-      console.log(this.container);
+  getCakeName() {
+    if (this.flavor === "coklat") {
+      this.cakeName = new ChocolateChip().cakeName
     }
-  }
-
-  listCake() {
-    // this.produceCake();
-    // return `${this.ingredients}`
-    // console.log(this.container);
-    // return this.container
-    // return (`The cake flavour is ${this.container._flavour} ,`);
-    // return this.container._flavour
-  }
-}
-
-class Cake {
-  constructor(flavour, ingredients) {
-    this._flavour = flavour;
-    this.ingredients = ingredients
-    // console.log(this.ingredients);
-    // console.log(this.nama_ingredient);
-  }
-
-
-}
-
-class Bake {
-  constructor(flavour, user_time) {
-    var kue = new Cake(flavour, new Ingredient("gula", 50));
-    this._flavour = kue._flavour
-    this._bake_time = 0;
-    this._user_time = user_time || 0
-    this.kue = kue
-    // console.log(this.kue);
-
-  }
-
-  baking() {
-    if (this._flavour === "coklat") {
-      this._bake_time = 10;
-
-    } else if (this._flavour === "keju") {
-      this._bake_time = 20;
-
-    } else {
-      this._bake_time = 30;
+    else if (this.flavor === "keju") {
+      this.cakeName = new CheeseCake().cakeName
     }
-    return this._bake_time;
+    else if(this.flavor === "kacang"){
+      this.cakeName = new PeanutButter().cakeName
+    }
+    return this.cakeName
   }
 
-  baking_result() {
-    // this.baking();
-    if (this._user_time < (this._bake_time / 2)) {
-      return "Mentah";
-    } else if (this._user_time < (this._bake_time)) {
-      return "Hampir Matang";
-    } else if (this._user_time === this._bake_time) {
-      return "Matang";
-    } else {
-      return "Gosong";
+  getCakeTime() {
+    if (this.flavor === "coklat") {
+      this.bakeTime = 10;
     }
+    else if (this.flavor === "keju") {
+      this.bakeTime = 20;
+    }
+    else if(this.flavor === "kacang"){
+      this.bakeTime = 30;
+    }
+    return this.bakeTime
+  }
+
+  getCakeSugar() {
+    if (this.flavor === "coklat") {
+      this.sugar = new Ingredient(200)
+    }
+    else if (this.flavor === "keju") {
+      this.sugar = new Ingredient(0)
+    }
+    else if(this.flavor === "kacang"){
+      this.sugar = new Ingredient(100)
+    }
+    // console.log(this.sugar);
+    return this.sugar
   }
 
   result() {
-    this.baking()
-    // return (`The cake flavour is ${this._flavour} ,the time needed to bake is ${this._bake_time} and your baking time is ${this._user_time}. Your cake is ${this.baking_result()} `);
+    if (this.cookTime < (this.getCakeTime() / 2)) {
+      this.cakeStatus = new Cookie().cakeStatus
+    } else if (this.cookTime < (this.getCakeTime())) {
+      this.cakeStatus = "hampir matang"
+    } else if (this.cookTime === this.getCakeTime()) {
+      this.cakeStatus = "matang"
+    } else {
+      this.cakeStatus = "gosong"
+    }
+    return this.cakeStatus
+  }
 
-    // return (`The cake flavour is ${this._flavour} ,`);
+  createCake() {
+    this.CakeStats
+    this.cakeContainter.push({nama: this.getCakeName(), flavor: this.flavor, hasil: this.result(), gula:this.getCakeSugar().sugar})
+    kue.push({nama: this.getCakeName(), flavor: this.flavor, hasil: this.result(), gula:this.getCakeSugar().sugar})
+    console.log(this.cakeContainter);
+  }
+
+  showNowSugarCake(hari) {
+    if(hari == "selasa") {
+      for(var i=0; i<kue.length; i++) {
+        if(kue[i].gula == 0) {
+          console.log(kue[i]);
+        }
+      }
+    }
   }
 }
 
-// Defining Inheritance
-class ChocolateCake extends Cake {
-  constructor(flavour, ingredients) {
-    super(flavour, ingredients)
-  }
-}
 
-class CheeseCake extends Cake {
-  constructor(flavour, ingredients) {
-    super(flavour, ingredients)
-  }
-}
+var createCake = new CookieFactory("coklat", 10)
+createCake.createCake()
+var createCake = new CookieFactory("keju", 20)
+createCake.createCake()
+var createCake = new CookieFactory("kacang", 30)
+createCake.createCake()
 
-class PeanutCake extends Cake {
-  constructor(flavour, ingredients) {
-    super(flavour, ingredients)
-  }
-}
-// Difining variable and assign it to the class
-
-// check the result
-
-
-
-
-
-// var testing = new Bake("coklat", 22);
-// console.log(testing.baking_result());
-// testing.result();
-// var ing = new Ingredient("gula", 50)
-// console.log(ing);
-var createCake = new Factory("coklat", 12, 2);
-createCake.produceCake()
+console.log("============ Kue Bebas Gula Hari Selasa ============");
+createCake.showNowSugarCake("selasa")
