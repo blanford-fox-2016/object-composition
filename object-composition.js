@@ -1,60 +1,90 @@
 "use strict"
 const fs = require('fs');
-let cookieList = fs.readFileSync('cookies.txt').toString().split("\n");
+let cookieList = fs.readFileSync('cookies.txt').toString().trim().split("\n");
 let database = [];
 
 class Cookies {
-  constructor(args={}) {
-    this.cookiesName = args['cookiesName'];
-    this.ingridients = args['ingridients'];
-    this.cookingTime = args['cookingTime'];
-    this.cinnamon = args['cinnamon'] || 0;
-    this.sugar = args['sugar'] || 0;
-  }
-
-  save_to_db() {
-    database.push(this.constructor.name);
-  }
-
-  bake() {
-    this.status = "sudah matang";
+  constructor(cookiesName, status, ingridients, cinnamon, sugar) {
+    this.name = cookiesName;
+    this.status = status|| "Mentah";
+    this.cinnamon = cinnamon;
+    this.sugar= sugar;
   }
 }
 
-class PeanutButter {
-  constructor() {
-    this.peanut_count = 100;
+class PeanutButter extends Cookies{
+  constructor(cookiesName, status, ingridients, cinnamon, sugar) {
+    super(cookiesName, status, ingridients, cinnamon, sugar);
   }
 }
 
-class ChocoCips {
-  constructor() {
-    this.choco_cips_count = 200;
+class ChocoCips extends Cookies{
+  constructor(cookiesName, status, ingridients, cinnamon, sugar) {
+    super(cookiesName, status, ingridients, cinnamon, sugar);
   }
 }
 
+class CheeseButter extends Cookies{
+  constructor(cookiesName, status, ingridients, cinnamon, sugar) {
+    super(cookiesName, status, ingridients, cinnamon, sugar);
+  }
+}
+
+class Ingredients {
+  constructor(cinnamon, sugar) {
+    this.cinnamon = cinnamon;
+    this.sugar = sugar;
+  }
+}
 
 class CookiesFactory {
   static create() {
     for (var i = 0; i < cookieList.length; i++) {
-      database.push(cookieList[i]);
+      if (cookieList[i] == 'Peanut Butter Cookies') {
+        var ings = new Ingredients(100, 50);
+        var PeanutButterCookies = new PeanutButter({
+          cookiesName: 'Peanut Butter Cookies',
+          status: 'matang',
+          cinnamon: ings.cinnamon,
+          sugar: ings.sugar
+        })
+        database.push(PeanutButterCookies.name);
+      } else if (cookieList[i] == 'Choco Cips Cookies') {
+        var ings = new Ingredients(100, 100);
+        var ChocoCookies = new ChocoCips({
+          cookiesName: 'Choco Cips Cookies',
+          status: 'matang',
+          cinnamon: ings.cinnamon,
+          sugar: ings.sugar
+        })
+        database.push(ChocoCookies.name);
+        } else if (cookieList[i] == 'Cheese Butter Cookies') {
+          var ings = new Ingredients(100, 0);
+          var CheeseButterCookies = new CheeseButter({
+            cookiesName: 'Cheese Butter Cookies',
+            status: 'matang',
+            cinnamon: ings.cinnamon,
+            sugar: ings.sugar
+          })
+          database.push(CheeseButterCookies.name);
+        }
+       else {
+        console.log(`Sayang sekali, kami belum punya resep ${cookieList[i]}`);
+      }
     }
     return database;
   }
-}
-let ChocoCookies = {
-  cookiesName : 'Cookies',
-  ingridients : ['Telur', 'Tepung', 'Choco cips'],
-  cookingTime : 40;
-}
-let ButterCookies = {
-  cookiesName : 'Cookies',
-  ingridients : ['Telur', 'Tepung', 'Butter'],
-  cookingTime : 40;
-}
 
-let choco_cookies = new Cookies(ChocoCookies);
-console.log(choco_cookies);
-choco_cookies.save_to_db();
-
+  static selasa() {
+    console.log('Kue bebas gula untuk hari selasa : ');
+    for (var i = 0; i < database.length; i++) {
+      if (database[i].sugar == 0) {
+        console.log(database[i].cookiesName);
+      }
+    }
+  }
+}
+// console.log(ChocoCookies);
 console.log(CookiesFactory.create());
+CookiesFactory.selasa()
+// console.log(cookieList);
