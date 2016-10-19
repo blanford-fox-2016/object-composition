@@ -33,6 +33,12 @@ class ChocoCips {
   }
 }
 
+Class Ingredients {
+  constructor() {
+    
+  }
+}
+
 
 class CookiesFactory {
   static create() {
